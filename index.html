@@ -17,7 +17,7 @@
   <script>
 
   const apikey = "_DDIVJSgdK-GI1wA3aHOtxC9YTt8tCY6-4jMk7guznY";
-  const count = 5
+  const count = 1
   const apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apikey}&count=${count}`;
 
     function throttle ( mainFunc, delay ){
@@ -42,7 +42,7 @@
 
     }
 
-    async function add () {  
+    async function fetchImage () {  
 
       try {
 
@@ -54,7 +54,7 @@
 
 
         for (let i = 0; i < parsedResponse?.length; i++) {
-          
+
           const imageObj = parsedResponse[i];
           const listItem = document.createElement('li')
           const image = document.createElement('img')
@@ -73,9 +73,9 @@
 
      }
 
-    const throttledAdd = throttle(add, 2000)
+    const throttledImageFetch = throttle(fetchImage, 2000)
 
-    window.addEventListener( 'scroll', throttledAdd  )
+    window.addEventListener( 'scroll', throttledImageFetch  )
 
 
 

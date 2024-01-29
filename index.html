@@ -7,12 +7,18 @@
 </head>
 <body>
 
-  <div style="height: 200vh;" >
+  <ul id="images-list" style="height: 200vh;">
+     
 
-  </div>
+
+  </ul>
 
 
   <script>
+
+  const apikey = "_DDIVJSgdK-GI1wA3aHOtxC9YTt8tCY6-4jMk7guznY";
+  const count = 5
+  const apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apikey}&count=${count}`;
 
     function throttle ( mainFunc, delay ){
 
@@ -36,7 +42,36 @@
 
     }
 
-    function add () {  console.log("Winow scrolled!") }
+    async function add () {  
+
+      try {
+
+        const response = await fetch(apiUrl)
+
+        const parsedResponse = await response.json()
+
+        const imageList = document.getElementById('images-list')
+
+
+        for (let i = 0; i < parsedResponse?.length; i++) {
+          
+          const imageObj = parsedResponse[i];
+          const listItem = document.createElement('li')
+          const image = document.createElement('img')
+          image.setAttribute('src', parsedResponse[i].urls.small)
+          listItem.append(image)
+          imageList.append(listItem)
+        }
+
+      } catch (error) {
+
+        console.log(error)
+
+      }
+
+      
+
+     }
 
     const throttledAdd = throttle(add, 2000)
 

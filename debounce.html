@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1> Images </h1>
+
+    <ul id="image-list" >
+
+
+
+    </ul>
+
+    <script src="lodash.js" ></script>
+
+    <script>
+
+    const apikey = "_DDIVJSgdK-GI1wA3aHOtxC9YTt8tCY6-4jMk7guznY";
+    const count = 10
+    const apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apikey}&count=${count}`;
+
+    async function fetchImage () {
+
+        const responses = await fetch(apiUrl)
+
+        const parsedResponse = await responses.json()
+
+        const imageList = document.getElementById('image-list')
+
+        for( let i=0; i<parsedResponse.length; i++ )
+        {
+            const imageUrl = parsedResponse[i].urls.small
+            const listItem = document.createElement('li')
+            const image = document.createElement('img')
+            image.setAttribute('src', imageUrl)
+            listItem.append(image)
+            imageList.append(listItem)
+
+        }
+
+    }
+
+    fetchImage()
+
+    const debouncedFetchImage = _.debounce(fetchImage, 1)
+
+    window.addEventListener('scroll', debouncedFetchImage )
+
+
+    </script>
+    
+</body>
+</html>
